@@ -11,3 +11,8 @@ class UserRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserRating
         fields = '__all__'
+
+class UserRatingShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserRating
+        fields = "user_name", "user_rating"
