@@ -1,3 +1,4 @@
+# This file initializes the .env file and gets the api key
 import openai
 from dotenv import load_dotenv
 import os
