@@ -2,11 +2,22 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv # for openai api
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+
+    # Load environment variables from .env file
+    try:
+        dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+        load_dotenv(dotenv_path)
+        print(".env file successfully found.")
+    except FileNotFoundError:
+        # Handle the case when .env file is missing
+        print(".env file not found. Environment variables will not be loaded.")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
