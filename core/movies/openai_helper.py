@@ -1,5 +1,5 @@
 # This file initializes the .env file and gets the api key
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
@@ -14,4 +14,6 @@ def initialize_openai():
         print(".env file not found. Environment variables will not be loaded.")
 
     # Set the OpenAI API key with a default value if .env is missing or key is not available
-    openai.api_key = os.getenv('OPENAI_API_KEY', 'notavalidapikey')
+    client = OpenAI(
+        api_key=os.getenv('OPENAI_API_KEY', 'notavalidapikey')
+    )

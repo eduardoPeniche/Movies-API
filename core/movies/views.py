@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Movie, UserRating
 from .serializers import MovieSerializer, UserRatingSerializer, UserRatingShortSerializer
 
-import openai
+from openai import OpenAI
 from .openai_helper import initialize_openai
 
 # Create your views here.
@@ -21,21 +21,24 @@ class MovieView(APIView):
     def post(self, request):
         initialize_openai()
         serializer = MovieSerializer(data=request.data)
+
         if serializer.is_valid():
             movie_data = serializer.validated_data
             # Prepare prompt for open ai with movie title and year
-            prompt = f"Generate a storyline for the movie '{movie_data['title']}' released in {movie_data['year']}. "
+            prompt = f"Generate a short storyline (max 2 sentences) for the movie '{movie_data['title']}' released in {movie_data['year']}. "
             
             try:
                 # Make a call to the OpenAI API to generate the storyline
-                response = openai.Completion.create(
-                    engine="text-davinci-003",
+                client = OpenAI()  # Initialize OpenAI client
+
+                response = client.completions.create(
+                    model='gpt-3.5-turbo-instruct',
                     prompt=prompt,
-                    max_tokens=100
+                    max_tokens=80
                 )
 
                 # Update the movie_data with the generated storyline
-                movie_data['storyline_ai_api'] = response['choices'][0]['text']
+                movie_data['storyline_ai_api'] = response.choices[0].text
 
             except Exception as e:
                 # Handle OpenAI-related errors
