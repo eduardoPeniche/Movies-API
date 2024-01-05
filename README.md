@@ -23,7 +23,7 @@ entrar a carpeta core `cd core`
 
 `python manage.py runserver`
 
-Usar VSCode Thunder Client Extension o Navegador a "http://localhost:8000/api/tasks"
+Usar VSCode Thunder Client Extension o Navegador a "http://localhost:8000/api/movies"
 
 ### Visualizar todas las peliculas en la Base de datos
 GET a http://localhost:8000/api/movies
